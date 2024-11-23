@@ -1,0 +1,31 @@
+<form method="post" action="{% url 'cgpa_calculator' %}">
+    {% csrf_token %}
+  {{form.as_p}}
+    <button type="submit">Add Subject</button>
+   <button> <a href="{% url 'result' %}">Generate Result</a></button>
+</form>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>Subject</th>
+        <th>Grade</th>
+        <th>Credit</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for subject in subjects %}
+        <tr>
+            <td style="font-family: 'Times New Roman', Times, serif;">{{ subject.name }}</td>
+            <td style="font-family: 'Times New Roman', Times, serif;">{{ subject.grade }}</td>
+            <td style="font-family: 'Times New Roman', Times, serif;">{{ subject.credit }}</td>
+            <td>
+              <button><a  href="{% url 'edit_subject' subject.id %}">Edit</a></button> 
+              <button><a href="{% url 'delete_subject' subject.id %}">Delete</a></button> 
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>

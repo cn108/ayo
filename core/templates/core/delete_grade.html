@@ -1,0 +1,9 @@
+<main class="container">
+    <h1>Delete Grade</h1>
+    <p>Are you sure you want to delete {{ subject.name }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="{% url 'grades' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</main>

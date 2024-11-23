@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Assignment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-tasks"></i> Edit Assignment</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h2>Edit Assignment</h2>
+            <form method="post" class="assignment-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title">Title:</label>
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="id_due_date">Due Date:</label>
+                    {{ form.due_date }}
+                </div>
+                <div class="form-group">
+                    <label for="id_status">Status:</label>
+                    {{ form.status }}
+                </div>
+                <button type="submit" class="btn btn-primary">Update Assignment</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

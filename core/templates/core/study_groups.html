@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Groups</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Study Groups</h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'schedule' %}">Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'assignments' %}">Assignments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'grades' %}">Grades</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Study Groups</h2>
+        <input type="text" id="searchInput" placeholder="Search study groups..." class="form-control">
+        <div id="searchResults"></div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Available Study Groups</h5>
+                {% if study_groups %}
+                    <ul class="list-group">
+                        {% for group in study_groups %}
+                            <li class="list-group-item">
+                                <h6 class="mb-1">{{ group.name }}</h6>
+                                <p class="mb-1">Meeting: {{ group.meeting_time }}</p>
+                                <small>Location: {{ group.location }}</small>
+                                <div class="mt-2">
+                                    <a href="{% url 'edit_study_group' group.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{% url 'delete_study_group' group.pk %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this study group?');">Delete</a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No study groups available.</p>
+                {% endif %}                
+                <a href="{% url 'create_study_group' %}" class="btn btn-primary mt-3">Create a Study Group</a>
+            </div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('keyup', function() {
+                let query = $(this).val();
+                $.ajax({
+                    url: "{% url 'search_study_groups' %}",
+                    data: { 'q': query },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#searchResults').empty();
+                        if (data.length > 0) {
+                            data.forEach(function(item) {
+                                $('#searchResults').append(`
+                                    <div class="card my-2">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${item.name}</h5>
+                                            <p class="card-text">Meeting: ${item.meeting_time}</p>
+                                            <p class="card-text">Location: ${item.location}</p>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                        } else {
+                            $('#searchResults').append('<p>No results found.</p>');
+                        }
+                    }
+                });
+            });
+        });
+    </script> 
+</body>
+</html>

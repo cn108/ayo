@@ -1,0 +1,9 @@
+<main class="container">
+    <h1>Update Grade</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+    <a href="{% url 'grades' %}" class="btn btn-secondary">Cancel</a>
+</main>

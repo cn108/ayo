@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .timetable th, .timetable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .timetable th {
+            background-color: #f2f2f2;
+        }
+
+        .editable-cell {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-primary text-white p-3 mb-4">
+        <div class="container">
+            <h1 class="h3">Schedule</h1>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'assignments' %}">Assignments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'grades' %}">Grades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'study_groups' %}">Study Groups</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <h2 class="my-4">Your Schedule</h2>
+        <form id="scheduleForm" class="mb-4">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" class="form-control" id="event" placeholder="Event Name" required>
+                </div>
+                <div class="col">
+                    <input type="time" class="form-control" id="time" placeholder="Time" required>
+                </div>
+                <div class="col">
+                    <select class="form-control" id="day" required>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Add Event</button>
+                </div>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table class="timetable" id="scheduleTable">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sample times for the schedule, adjust as needed -->
+                    <tr>
+                        <td>08:00 AM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="08:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="08:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="08:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="08:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="08:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>09:00 AM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="09:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="09:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="09:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="09:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="09:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>10:00 AM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="10:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="10:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="10:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="10:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="10:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>11:00 AM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="11:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="11:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="11:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="11:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="11:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>12:00 PM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="12:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="12:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="12:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="12:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="12:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>13:00 PM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="13:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="13:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="13:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="13:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="13:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>14:00 PM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="14:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="14:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="14:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="14:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="14:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>15:00 PM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="15:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="15:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="15:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="15:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="15:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>16:00 PM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="16:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="16:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="16:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="16:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="16:00"> </td>
+                    </tr>
+                    <tr>
+                        <td>17:00 PM</td>
+                        <td class="editable-cell" data-day="Monday" data-time="17:00"> </td>
+                        <td class="editable-cell" data-day="Tuesday" data-time="17:00"> </td>
+                        <td class="editable-cell" data-day="Wednesday" data-time="17:00"> </td>
+                        <td class="editable-cell" data-day="Thursday" data-time="17:00"> </td>
+                        <td class="editable-cell" data-day="Friday" data-time="17:00"> </td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const scheduleTable = $('#scheduleTable tbody');
+
+            // Load schedules from the database
+            $.ajax({
+                url: "{% url 'get_schedules' %}",
+                method: "GET",
+                success: function (data) {
+                    data.forEach(schedule => {
+                        const timeCell = scheduleTable.find(`tr td[data-day="${schedule.day}"][data-time="${schedule.time}"]`);
+                        timeCell.text(schedule.name);
+                        timeCell.data('scheduleId', schedule.id); // Store schedule ID for future updates/deletion
+                    });
+                }
+            });
+
+            // Add new schedule to the table
+            $('#scheduleForm').on('submit', function (event) {
+                event.preventDefault();
+                const eventName = $('#event').val();
+                const eventTime = $('#time').val();
+                const eventDay = $('#day').val();
+
+                $.ajax({
+                    url: "{% url 'add_schedule' %}",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ name: eventName, time: eventTime, day: eventDay }),
+                    success: function (data) {
+                        const timeCell = scheduleTable.find(`tr td[data-day="${data.day}"][data-time="${data.time}"]`);
+                        timeCell.text(data.name);
+                        timeCell.data('scheduleId', data.id); // Store the schedule ID
+                    }
+                });
+
+                // Reset the form
+                $(this).trigger('reset');
+            });
+
+            // Edit or delete a schedule
+            scheduleTable.on('click', '.editable-cell', function () {
+                const currentContent = $(this).text();
+                const scheduleId = $(this).data('scheduleId');
+                const newContent = prompt('Edit Event:', currentContent);
+
+                if (newContent !== null && scheduleId) {
+                    // Update schedule in the database
+                    $.ajax({
+                        url: `{% url 'update_schedule' 0 %}`.replace('0', scheduleId),
+                        method: "PUT",
+                        contentType: "application/json",
+                        data: JSON.stringify({ name: newContent, time: $(this).data('time'), day: $(this).data('day') }),
+                        success: function () {
+                            $(this).text(newContent);
+                        }.bind(this) // Use .bind(this) to retain context
+                    });
+                }
+            });
+
+            // Confirm and delete schedule
+            scheduleTable.on('contextmenu', '.editable-cell', function (event) {
+                event.preventDefault();
+                const scheduleId = $(this).data('scheduleId');
+
+                if (confirm('Are you sure you want to delete this event?')) {
+                    $.ajax({
+                        url: `{% url 'delete_schedule' 0 %}`.replace('0', scheduleId),
+                        method: "DELETE",
+                        success: function () {
+                            $(this).text('');
+                            $(this).removeData('scheduleId');
+                        }.bind(this) // Use .bind(this) to retain context
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
